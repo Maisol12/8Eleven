@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const usersRouter = require('./users');
 const productsRouter = require('./products');
+const puntosRouter = require('./puntos');
 
 const app = express();
 const port = 3001;
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use('/users', usersRouter); // Rutas relacionadas con usuarios
 app.use('/products', productsRouter); // Rutas relacionadas con productos
+app.use('/puntos', puntosRouter); // Rutas relacionadas con puntos de venta
 
 app.listen(port, () => {
     console.log(`Servidor escuchando en http://localhost:${port}`);
