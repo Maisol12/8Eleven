@@ -29,10 +29,10 @@ router.post('/guardar-producto', (req, res) => {
     }
 });
 
-router.get('./lista-puntos',async (req,res) => { // No jala no se por que, dice el postman que no existe y aqui esta, maten a los negros
+router.get('/lista-puntos', (req, res) => {
     try {
-        // Obtén todos los puntos de venta de la base de datos
-        const puntosDeVenta = await PuntoDeVenta.find();
+        // Obtén todos los puntos de venta del archivo JSON
+        const puntosDeVenta = jsonData;
 
         // Devuelve la lista de puntos de venta como JSON
         res.json(puntosDeVenta);
@@ -43,10 +43,10 @@ router.get('./lista-puntos',async (req,res) => { // No jala no se por que, dice 
     }
 });
 
-router.put('/actualizar-punto', async (req, res) => { // Igual No jala no se por que, dice el postman que no existe y aqui esta, maten a los negros
+router.put('/actualizar-punto', async (req, res) => { 
     try {
         // Verifica que se haya proporcionado un cuerpo de solicitud y un código de barras
-        if (!req.body || !req.body.cod_barras) {
+        if (!req.body || !req.body.nombre) {
             return res.status(400).json({ error: 'Se requiere un nombre de un punto para esta solicitud' });
         }
 
@@ -54,21 +54,26 @@ router.put('/actualizar-punto', async (req, res) => { // Igual No jala no se por
         const nombreActualizar = req.body.nombre;
 
         // Busca el índice del punto de venta en la base de datos
-        const puntoDeVenta = await PuntoDeVenta.findOne({ nombre: nombreActualizar });
+        const indicePunto = jsonData.findIndex(item => item.nombre === nombreActualizar);
 
         // Verifica si el punto de venta existe
-        if (!puntoDeVenta) {
+        if (indicePunto === -1) {
             return res.status(404).json({ error: 'Punto de venta no encontrado' });
         }
 
         // Actualiza los datos del punto de venta con la información proporcionada en el cuerpo de la solicitud
-        await PuntoDeVenta.updateOne({ nombre: nombreActualizar }, { $set: req.body });
+        jsonData[indicePunto] = { ...jsonData[indicePunto], ...req.body };
+
+        fs.writeFileSync('./puntos.json', JSON.stringify(jsonData, null, 2));
+
 
         console.log('Punto de venta actualizado correctamente.');
         res.json({ message: 'Punto de venta actualizado correctamente' });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error al actualizar el punto de venta' });
     }
 });
+
 module.exports = router;
