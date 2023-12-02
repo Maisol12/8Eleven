@@ -76,4 +76,38 @@ router.put('/actualizar-punto', async (req, res) => {
     }
 });
 
+router.delete('/eliminar-punto', (req, res) => {
+    try {
+        // Verifica que se haya proporcionado un cuerpo de solicitud y un nombre
+        if (!req.body || !req.body.nombre) {
+            return res.status(400).json({ error: 'Se requiere un nombre de un punto para esta solicitud' });
+        }
+
+        // Obtiene el nombre a eliminar desde el cuerpo de la solicitud
+        const nombreEliminar = req.body.nombre;
+
+        // Busca el índice del punto de venta en el arreglo por el nombre
+        const indicePunto = jsonData.findIndex(item => item.nombre === nombreEliminar);
+
+        // Verifica si el punto de venta existe
+        if (indicePunto === -1) {
+            return res.status(404).json({ error: 'Punto de venta no encontrado' });
+        }
+
+        // Elimina el punto de venta del arreglo
+        jsonData.splice(indicePunto, 1);
+
+        // Guarda los cambios en el archivo JSON
+        fs.writeFileSync('./puntos.json', JSON.stringify(jsonData, null, 2));
+
+        console.log('Punto de venta eliminado correctamente.');
+        res.json({ message: 'Punto de venta eliminado correctamente' });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al eliminar el punto de venta' });
+    }
+});
+
+
 module.exports = router;
