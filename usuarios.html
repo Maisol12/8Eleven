@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Crear Usuarios - 8Eleven</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+
+        <!-- Barra Lateral (Sidebar) -->
+        <div id="sidebar"></div>
+
+        <!-- Contenido de la página -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+
+                <!-- Barra de Navegación Superior -->
+                <div id="topbar"></div>
+
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Crear Usuarios</h1>
+
+                    <!-- Formulario de Creación de Usuarios -->
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <form onsubmit="submitForm(); return false;">
+                                <div class="mb-3">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="apellido" class="form-label">Apellidos</label>
+                                    <input type="text" class="form-control" id="apellido" placeholder="Ingrese el apellido" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="usuario" class="form-label">Usuario</label>
+                                    <input type="email" class="form-control" id="usuario" placeholder="Ingrese el correo electrónico" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control" id="password" placeholder="Ingrese la contraseña" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="rol" class="form-label">Rol</label>
+                                    <select class="form-select" id="rol" required>
+                                        <option value="" selected disabled>Seleccione el rol</option>
+                                        <option value="admin">Administrador</option>
+                                        <option value="vendedor">Vendedor</option>
+                                    </select>
+                                </div>                                
+                                <button type="submit" class="btn btn-primary">Crear Usuario</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script>
+        fetch('sidebar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('sidebar').innerHTML = data;
+            });
+
+        fetch('topbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('topbar').innerHTML = data;
+            });
+
+        function submitForm() {
+            console.log('submitForm');
+            const formData = {
+                nombre: document.getElementById('nombre').value,
+                apellido: document.getElementById('apellido').value,
+                usuario: document.getElementById('usuario').value,
+                password: document.getElementById('password').value,
+                rol: document.getElementById('rol').value
+            };
+
+            fetch('http://localhost:3001/users/guardar-usuario', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+            })
+
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert('Producto creado exitosamente');
+            })
+            .catch(error => console.error('Error:', error));
+            alert('Error al crear el producto');
+        }
+    </script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+[
+  {
+    "cod_barras": "beto",
+    "nombre": "perez",
+    "imagen": "beto@gmail.com",
+    "precio-compra": "hola1234",
+    "rol": "admin"
+  },
+  {
+    "cod_barras": "beto",
+    "nombre": "perez",
+    "imagen": "beto@gmail.com",
+    "precio-compra": "hola1234",
+    "rol": "admin"
+  },
+  {
+    "nombre": "juan",
+    "apellido": "rivera",
+    "usuario": "juan@gmail.com",
+    "password": "oki1234",
+    "rol": "admin"
+  },
+  {
+    "nombre": "joshua",
+    "apellido": "puki",
+    "usuario": "joshua@gmail.com",
+    "password": "okiva",
+    "rol": "admin"
+  }
+]
