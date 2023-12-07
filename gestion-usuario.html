@@ -123,7 +123,7 @@
                             <td>${usuario.usuario}</td>
                             <td>${usuario.rol}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal"
+                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#editarUsuarioModal" onclick="editarUsuario('${usuario.usuario}')">Editar</button>
                                 <button type="button" class="btn btn-sm btn-danger" onclick="eliminarUsuario('${usuario.usuario}')">Eliminar</button>
                             </td>
@@ -138,62 +138,94 @@
         }
 
         function editarUsuario(usuario) {
-        // Lógica para cargar los datos del usuario en el modal
-        fetch(`https://8eleven.glitch.me/users/detalle-usuario/${encodeURIComponent(usuario)}`, {
-            method: 'GET'
-        })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('editNombre').value = data.nombre;
-                document.getElementById('editApellido').value = data.apellido;
-                document.getElementById('editUsuario').value = data.usuario;
-                document.getElementById('editRol').value = data.rol;
-
-                // Puedes agregar más campos según sea necesario
-
-                // Abre el modal después de cargar los datos
-                $('#editarUsuarioModal').modal('show');
+            // Lógica para cargar los datos del usuario en el modal
+            fetch(`https://8eleven.glitch.me/users/detalle-usuario/${encodeURIComponent(usuario)}`, {
+                method: 'GET'
             })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al cargar los detalles del usuario');
-            });
-    }
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('editNombre').value = data.nombre;
+                    document.getElementById('editApellido').value = data.apellido;
+                    document.getElementById('editUsuario').value = data.usuario;
+                    document.getElementById('editRol').value = data.rol;
 
-    function actualizarUsuario() {
-        // Lógica para enviar los datos actualizados al servidor
-        const formData = {
-            nombre: document.getElementById('editNombre').value,
-            apellido: document.getElementById('editApellido').value,
-            usuario: document.getElementById('editUsuario').value,
-            rol: document.getElementById('editRol').value,
-            // Agrega más campos según sea necesario
-        };
+                    // Puedes agregar más campos según sea necesario
 
-        fetch('https://8eleven.glitch.me/users/actualizar-usuario', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    // Abre el modal después de cargar los datos
+                    $('#editarUsuarioModal').modal('show');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error al cargar los detalles del usuario');
+                });
+        }
+
+        function actualizarUsuario() {
+            // Mostrar alerta de confirmación
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Esta acción actualizará el usuario. ¿Quieres continuar?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Sí, actualizar'
+                
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Lógica para enviar los datos actualizados al servidor
+                    const formData = {
+                        nombre: document.getElementById('editNombre').value,
+                        apellido: document.getElementById('editApellido').value,
+                        usuario: document.getElementById('editUsuario').value,
+                        rol: document.getElementById('editRol').value,
+                    };
+
+                    fetch('https://8eleven.glitch.me/users/actualizar-usuario', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log(data);
+                            // Alerta de actualización exitosa personalizada
+                            Swal.fire({
+                                title: '¡Actualización exitosa!',
+                                text: 'El usuario ha sido actualizado correctamente.',
+                                icon: 'success',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'OK'
+                            }).then(() => {
+                                // Cierra el modal después de la actualización
+                                $('#editarUsuarioModal').modal('hide');
+                                // Vuelve a cargar la lista de usuarios después de la actualización
+                                cargarUsuarios();
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            // Alerta de error al actualizar el usuario
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'Ocurrió un error al actualizar el usuario. Por favor, inténtalo de nuevo.',
+                                icon: 'error',
+                                confirmButtonColor: '#d33',
+                                confirmButtonText: 'OK'
+                            });
+                        });
                 }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-                alert('Usuario actualizado exitosamente');
-                $('#editarUsuarioModal').modal('hide'); // Cierra el modal después de la actualización
-                cargarUsuarios(); // Vuelve a cargar la lista de usuarios después de la actualización
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al actualizar el usuario');
             });
-    }
+        }
+
 
         function eliminarUsuario(usuario) {
             swalWithBootstrapButtons.fire({
