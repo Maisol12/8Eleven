@@ -17,9 +17,7 @@
 
 <body id="page-top">
     <div id="wrapper">
-
         <div id="sidebar"></div>
-
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
 
@@ -43,7 +41,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tablaPuntosVentas">
-                                    <!-- Aquí se cargarán dinámicamente los puntos de venta -->
                                 </tbody>
                             </table>
                         </div>
@@ -141,7 +138,7 @@
                                     document.getElementById('nombre').value = data.nombre;
                                     document.getElementById('zona').value = data.zona;
 
-                                    $('#detallePuntoVentaModal').modal('show'); // Abre el modal después de cargar los detalles
+                                    $('#detallePuntoVentaModal').modal('show'); 
                                 })
                                 .catch(error => {
                                     console.error('Error:', error);
@@ -158,6 +155,7 @@
                                 nombre: document.getElementById('nombre').value,
                                 zona: document.getElementById('zona').value,
                             };
+
                             fetch('https://8eleven.glitch.me/puntosVentasRoutes/actualizar-punto-venta', {
                                 method: 'PUT',
                                 headers: {
@@ -173,15 +171,26 @@
                                 })
                                 .then(data => {
                                     console.log(data);
-                                    alert('Producto actualizado exitosamente');
-                                    $('#editarProductoModal').modal('hide');
-                                    cargarPuntosVentas();
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Producto actualizado exitosamente',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then(() => {
+                                        $('#editarProductoModal').modal('hide');
+                                        cargarPuntosVentas();
+                                    });
                                 })
                                 .catch(error => {
                                     console.error('Error:', error);
-                                    alert('Error en la actualización del producto');
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'Error en la actualización del producto'
+                                    });
                                 });
                         }
+
 
                         function cargarPuntosVentas() {
                             fetch('https://8eleven.glitch.me/puntosVentasRoutes/listar-puntos-ventas')
@@ -192,50 +201,91 @@
 
                                     data.forEach(puntoVenta => {
                                         const fila = `<tr>
-                            <td>${puntoVenta.pais}</td>
-                            <td>${puntoVenta.estado}</td>
-                            <td>${puntoVenta.municipio}</td>
-                            <td>${puntoVenta.cp}</td>
-                            <td>${puntoVenta.nombre}</td>
-                            <td>${puntoVenta.zona}</td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-primary m-1" data-bs-toggle="modal"
-                                data-bs-target="#editarPuntoVentaModal"
-                                onclick="cargarDetallePuntoVenta('${puntoVenta.nombre}')">Editar</button>
-                                <button type="button" class="btn btn-sm btn-danger" onclick="eliminarPuntoVenta('${puntoVenta.nombre}')">Eliminar</button>
-                            </td>
-                        </tr>`;
+                    <td>${puntoVenta.pais}</td>
+                    <td>${puntoVenta.estado}</td>
+                    <td>${puntoVenta.municipio}</td>
+                    <td>${puntoVenta.cp}</td>
+                    <td>${puntoVenta.nombre}</td>
+                    <td>${puntoVenta.zona}</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-primary m-1" data-bs-toggle="modal"
+                            data-bs-target="#editarPuntoVentaModal"
+                            onclick="cargarDetallePuntoVenta('${puntoVenta.nombre}')">Editar</button>
+                        <button type="button" class="btn btn-sm btn-danger" onclick="eliminarPuntoVenta('${puntoVenta.nombre}')">Eliminar</button>
+                    </td>
+                </tr>`;
                                         tablaPuntosVentas.innerHTML += fila;
+                                    });
+                                })
+                                .then(() => {
+                                    // Después de cargar, mostrar SweetAlert de éxito
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Lista de puntos de venta cargada exitosamente',
+                                        showConfirmButton: false,
+                                        timer: 800
                                     });
                                 })
                                 .catch(error => {
                                     console.error('Error:', error);
-                                    alert('Error al cargar la lista de puntos de venta');
+                                    // En caso de error, mostrar SweetAlert de error
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'Error al cargar la lista de puntos de venta'
+                                    });
                                 });
                         }
 
+
                         function eliminarPuntoVenta(nombre) {
-                            if (confirm('¿Estás seguro de eliminar este punto de venta?')) {
-                                fetch(`https://8eleven.glitch.me/puntosVentasRoutes/eliminar-punto-venta/${nombre}`, {
-                                    method: 'DELETE'
-                                })
-                                    .then(response => {
-                                        if (!response.ok) {
-                                            throw new Error(`HTTP error! Status: ${response.status}`);
-                                        }
-                                        return response.json();
+                            Swal.fire({
+                                title: '¿Estás seguro de eliminar este punto de venta?',
+                                text: 'Esta acción no se puede deshacer',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                cancelButtonText: 'Cancelar',
+                                confirmButtonColor: '#d33',
+                                cancelButtonColor: '#3085d6',
+                                confirmButtonText: 'Sí, eliminar'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Si el usuario confirma la eliminación
+                                    fetch(`https://8eleven.glitch.me/puntosVentasRoutes/eliminar-punto-venta/${nombre}`, {
+                                        method: 'DELETE'
                                     })
-                                    .then(data => {
-                                        console.log(data);
-                                        alert('Punto de venta eliminado exitosamente');
-                                        cargarPuntosVentas(); // Recargar la lista después de eliminar
-                                    })
-                                    .catch(error => {
-                                        console.error('Error:', error);
-                                        alert('Error al eliminar el punto de venta');
-                                    });
-                            }
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error(`HTTP error! Status: ${response.status}`);
+                                            }
+                                            return response.json();
+                                        })
+                                        .then(data => {
+                                            console.log(data);
+                                            // Utiliza SweetAlert para mostrar un mensaje de éxito
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: 'Punto de venta eliminado exitosamente',
+                                                showConfirmButton: false,
+                                                timer: 1500
+                                            }).then(() => {
+                                                // Recargar la lista después de eliminar
+                                                cargarPuntosVentas();
+                                            });
+                                        })
+                                        .catch(error => {
+                                            console.error('Error:', error);
+                                            // Utiliza SweetAlert para mostrar un mensaje de error
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Error',
+                                                text: 'Error al eliminar el punto de venta'
+                                            });
+                                        });
+                                }
+                            });
                         }
+
 
                         cargarPuntosVentas();
                     </script>

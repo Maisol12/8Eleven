@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,7 +20,6 @@
         <!-- Barra Lateral (Sidebar) -->
         <div id="sidebar"></div>
 
-
         <!-- Contenido de la página -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
@@ -36,30 +36,37 @@
                     <!-- Formulario de Creación de Productos -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
-                            <form onsubmit="event.preventDefault(); submitForm();">                                <div class="mb-3">
+                            <form onsubmit="event.preventDefault(); submitForm();">
+                                <div class="mb-3">
                                     <label for="cod_barras" class="form-label">Código de Barras</label>
-                                    <input type="text" class="form-control" id="cod_barras" placeholder="Ingrese el código de barras" required>
+                                    <input type="text" class="form-control" id="cod_barras"
+                                        placeholder="Ingrese el código de barras" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre del producto" pattern="[A-Za-z\s']+" required>
+                                    <input type="text" class="form-control" id="nombre"
+                                        placeholder="Ingrese el nombre del producto" pattern="[A-Za-z\s']+" required>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="precio_compra" class="form-label">Precio de Compra</label>
-                                    <input type="number" class="form-control" id="precio_compra" placeholder="Ingrese el precio de compra" required>
+                                    <input type="number" class="form-control" id="precio_compra"
+                                        placeholder="Ingrese el precio de compra" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="precio_venta" class="form-label">Precio de Venta</label>
-                                    <input type="number" class="form-control" id="precio_venta" placeholder="Ingrese el precio de venta" required>
+                                    <input type="number" class="form-control" id="precio_venta"
+                                        placeholder="Ingrese el precio de venta" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="precio_sugerido" class="form-label">Precio Sugerido</label>
-                                    <input type="number" class="form-control" id="precio_sugerido" placeholder="Ingrese el precio sugerido" required>
+                                    <input type="number" class="form-control" id="precio_sugerido"
+                                        placeholder="Ingrese el precio sugerido" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="stock" class="form-label">Stock</label>
-                                    <input type="number" class="form-control" id="stock" placeholder="Ingrese el stock" required>
+                                    <input type="number" class="form-control" id="stock" placeholder="Ingrese el stock"
+                                        required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="estado" class="form-label">Estado</label>
@@ -71,7 +78,8 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="descuento" class="form-label">Descuento</label>
-                                    <input type="number" class="form-control" id="descuento" placeholder="Ingrese el descuento" required>
+                                    <input type="number" class="form-control" id="descuento"
+                                        placeholder="Ingrese el descuento" required>
                                 </div>
                                 <div class="container-fluid">
                                     <div class="row">
@@ -116,44 +124,56 @@
 
 
         function submitForm() {
-        const formData = {
-            cod_barras: document.getElementById('cod_barras') ? document.getElementById('cod_barras').value : '',
-            nombre: document.getElementById('nombre') ? document.getElementById('nombre').value : '',
-            precio_compra: document.getElementById('precio_compra').value ? document.getElementById('precio_compra').value : '',
-            precio_venta: document.getElementById('precio_venta').value ? document.getElementById('precio_venta').value : '',
-            precio_sugerido: document.getElementById('precio_sugerido').value ? document.getElementById('precio_sugerido').value : '',
-            stock: document.getElementById('stock').value ? document.getElementById('stock').value : '',
-            estado: document.getElementById('estado').value ? document.getElementById('estado').value : '',
-            descuento: document.getElementById('descuento').value ? document.getElementById('descuento').value : ''
-        };
+            const formData = {
+                cod_barras: document.getElementById('cod_barras') ? document.getElementById('cod_barras').value : '',
+                nombre: document.getElementById('nombre') ? document.getElementById('nombre').value : '',
+                precio_compra: document.getElementById('precio_compra').value ? document.getElementById('precio_compra').value : '',
+                precio_venta: document.getElementById('precio_venta').value ? document.getElementById('precio_venta').value : '',
+                precio_sugerido: document.getElementById('precio_sugerido').value ? document.getElementById('precio_sugerido').value : '',
+                stock: document.getElementById('stock').value ? document.getElementById('stock').value : '',
+                estado: document.getElementById('estado').value ? document.getElementById('estado').value : '',
+                descuento: document.getElementById('descuento').value ? document.getElementById('descuento').value : ''
+            };
 
-        fetch('https://8eleven.glitch.me/products/guardar-producto', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data);
-            alert('Producto creado exitosamente');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error al crear el producto');
-        });
+            fetch('https://8eleven.glitch.me/products/guardar-producto', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Producto creado exitosamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al crear el producto'
+                    });
+                });
+        }
 
-    }
+
+
     </script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="js/sb-admin-2.min.js"></script>
 </body>
+
 </html>
