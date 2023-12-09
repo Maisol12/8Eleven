@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>Crear Puntos de Venta - 8Eleven</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 </head>
@@ -17,8 +18,119 @@
     <div id="wrapper">
 
         <!-- Barra Lateral (Sidebar) -->
-        <div id="sidebar"></div>
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">8Eleven</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Módulos
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-plus"></i>
+                    <span>Crear</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Crear:</h6>
+                        <a class="collapse-item" href="usuarios.html">Usuarios</a>
+                        <a class="collapse-item" href="productos.html">Productos</a>
+                        <a class="collapse-item" href="puntos.html">Puntos de venta</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Logistica</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Opciones:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Rutas</a>
+                        <a class="collapse-item" href="utilities-border.html">Descuentos Y Promociones</a>
+                        <a class="collapse-item" href="utilities-animation.html">Inventario</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Gestionar</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Opciones:</h6>
+                        <a class="collapse-item" href="gestion-usuario.html">Usuarios</a>
+                        <a class="collapse-item" href="gestion-productos.html">Productos</a>
+                        <a class="collapse-item" href="gestion-puntos.html">Puntos de venta</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Finanzas
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Ganancias</span></a>
+            </li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Perdidas</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+        <!-- End of Sidebar -->
         <!-- Contenido de la página -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
@@ -37,27 +149,33 @@
                             <form onsubmit="guardarPuntoVenta(); return false;">
                                 <div class="mb-3">
                                     <label for="pais" class="form-label">País</label>
-                                    <input type="text" class="form-control" id="pais" placeholder="Ingrese el país" required>
+                                    <input type="text" class="form-control" id="pais" placeholder="Ingrese el país"
+                                        required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="estado" class="form-label">Estado</label>
-                                    <input type="text" class="form-control" id="estado" placeholder="Ingrese el estado" required>
+                                    <input type="text" class="form-control" id="estado" placeholder="Ingrese el estado"
+                                        required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="municipio" class="form-label">Municipio</label>
-                                    <input type="text" class="form-control" id="municipio" placeholder="Ingrese el municipio" required>
+                                    <input type="text" class="form-control" id="municipio"
+                                        placeholder="Ingrese el municipio" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="cp" class="form-label">Código Postal (C.P)</label>
-                                    <input type="text" class="form-control" id="cp" placeholder="Ingrese el código postal" required>
+                                    <input type="text" class="form-control" id="cp"
+                                        placeholder="Ingrese el código postal" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label">Nombre del Punto de Venta</label>
-                                    <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre del punto de venta" required>
+                                    <input type="text" class="form-control" id="nombre"
+                                        placeholder="Ingrese el nombre del punto de venta" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="zona" class="form-label">Zona</label>
-                                    <input type="text" class="form-control" id="zona" placeholder="Ingrese la zona" required>
+                                    <input type="text" class="form-control" id="zona" placeholder="Ingrese la zona"
+                                        required>
                                 </div>
                                 <div class="container-fluid">
                                     <div class="row">
@@ -65,7 +183,9 @@
                                             <button type="submit" class="btn btn-sm btn-danger">Cancelar</button>
                                         </div>
                                         <div class="col-6 text-end">
-                                            <button type="button" class="btn btn-sm btn-primary" onclick="guardarPuntoVenta()">Crear punto de venta</button>                                        </div>
+                                            <button type="button" class="btn btn-sm btn-primary"
+                                                onclick="guardarPuntoVenta()">Crear punto de venta</button>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -86,12 +206,13 @@
     </div>
 
     <script>
-        // Función para cargar dinámicamente el contenido de la barra lateral
-        fetch('sidebar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('sidebar').innerHTML = data;
-            });
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success m-2",
+                cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+        });
 
         // Función para cargar dinámicamente el contenido de la barra de navegación superior
         fetch('topbar.html')
@@ -100,8 +221,8 @@
                 document.getElementById('topbar').innerHTML = data;
             });
 
-            function guardarPuntoVenta() {
-                console.log('guardarPuntoVenta');
+        function guardarPuntoVenta() {
+            console.log('guardarPuntoVenta');
             const formData = {
                 pais: document.getElementById('pais').value,
                 estado: document.getElementById('estado').value,
@@ -118,25 +239,36 @@
                 },
                 body: JSON.stringify(formData)
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-                alert('Punto de venta creado exitosamente');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al crear el punto de venta');
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Punto de venta creado exitosamente',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error al crear el punto de venta'
+                    });
+                });
         }
+
     </script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="js/sb-admin-2.min.js"></script>
 </body>
+
 </html>

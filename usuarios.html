@@ -8,16 +8,126 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Crear Usuarios - 8Eleven</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body id="page-top">
-
     <div id="wrapper">
-        <div id="sidebar"></div>
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">8Eleven</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Módulos
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-plus"></i>
+                    <span>Crear</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Crear:</h6>
+                        <a class="collapse-item" href="usuarios.html">Usuarios</a>
+                        <a class="collapse-item" href="productos.html">Productos</a>
+                        <a class="collapse-item" href="puntos.html">Puntos de venta</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Logistica</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Opciones:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Rutas</a>
+                        <a class="collapse-item" href="utilities-border.html">Descuentos Y Promociones</a>
+                        <a class="collapse-item" href="utilities-animation.html">Inventario</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Gestionar</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Opciones:</h6>
+                        <a class="collapse-item" href="gestion-usuario.html">Usuarios</a>
+                        <a class="collapse-item" href="gestion-productos.html">Productos</a>
+                        <a class="collapse-item" href="gestion-puntos.html">Puntos de venta</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Finanzas
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Ganancias</span></a>
+            </li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Perdidas</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+        <!-- End of Sidebar -->
 
         <!-- Contenido de la página -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -26,7 +136,7 @@
                 <!-- Barra de Navegación Superior -->
 
 
-                <div class="container w-50 mt-5">
+                <div class="container w-50  mt-5">
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Registrar usuario</h1>
@@ -43,7 +153,7 @@
                                 <div class="mb-3">
                                     <label for="apellido" class="form-label">Apellidos</label>
                                     <input type="text" class="form-control" id="apellido"
-                                        placeholder="Ingrese los apellidos" pattern="[A-Za-z\s']+" required>
+                                        placeholder="Ingrese los apellidos"  required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="usuario" class="form-label">Usuario</label>
@@ -79,7 +189,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
@@ -91,17 +200,23 @@
         </div>
     </div>
     <script>
-        fetch('sidebar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('sidebar').innerHTML = data;
-            });
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: "btn btn-success m-2",
+                cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+        });
 
         fetch('topbar.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('topbar').innerHTML = data;
             });
+
+
+
+
 
         function submitForm() {
             console.log('submitForm');
@@ -144,12 +259,11 @@
                     });
                 });
         }
-
-
     </script>
+
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="js/sb-admin-2.min.js"></script>
 </body>
 
