@@ -5,21 +5,127 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
     <title>Gestión de Puntos de Venta - 8Eleven</title>
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
     <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-        <div id="sidebar"></div>
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">8Eleven</div>
+            </a>
 
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Módulos
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-plus"></i>
+                    <span>Crear</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Crear:</h6>
+                        <a class="collapse-item" href="usuarios.html">Usuarios</a>
+                        <a class="collapse-item" href="productos.html">Productos</a>
+                        <a class="collapse-item" href="puntos.html">Puntos de venta</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Logistica</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Opciones:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Rutas</a>
+                        <a class="collapse-item" href="utilities-border.html">Descuentos Y Promociones</a>
+                        <a class="collapse-item" href="utilities-animation.html">Inventario</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Gestionar</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Opciones:</h6>
+                        <a class="collapse-item" href="gestion-usuario.html">Usuarios</a>
+                        <a class="collapse-item" href="gestion-productos.html">Productos</a>
+                        <a class="collapse-item" href="gestion-puntos.html">Puntos de venta</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Finanzas
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Ganancias</span></a>
+            </li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="tables.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Perdidas</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+        <!-- End of Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
 
@@ -43,7 +149,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tablaPuntosVentas">
-                                    <!-- Aquí se cargarán dinámicamente los puntos de venta -->
                                 </tbody>
                             </table>
                         </div>
@@ -141,7 +246,7 @@
                                     document.getElementById('nombre').value = data.nombre;
                                     document.getElementById('zona').value = data.zona;
 
-                                    $('#detallePuntoVentaModal').modal('show'); // Abre el modal después de cargar los detalles
+                                    $('#detallePuntoVentaModal').modal('show');
                                 })
                                 .catch(error => {
                                     console.error('Error:', error);
@@ -158,6 +263,7 @@
                                 nombre: document.getElementById('nombre').value,
                                 zona: document.getElementById('zona').value,
                             };
+
                             fetch('https://8eleven.glitch.me/puntosVentasRoutes/actualizar-punto-venta', {
                                 method: 'PUT',
                                 headers: {
@@ -173,15 +279,26 @@
                                 })
                                 .then(data => {
                                     console.log(data);
-                                    alert('Producto actualizado exitosamente');
-                                    $('#editarProductoModal').modal('hide');
-                                    cargarPuntosVentas();
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Producto actualizado exitosamente',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then(() => {
+                                        $('#editarProductoModal').modal('hide');
+                                        cargarPuntosVentas();
+                                    });
                                 })
                                 .catch(error => {
                                     console.error('Error:', error);
-                                    alert('Error en la actualización del producto');
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'Error en la actualización del producto'
+                                    });
                                 });
                         }
+
 
                         function cargarPuntosVentas() {
                             fetch('https://8eleven.glitch.me/puntosVentasRoutes/listar-puntos-ventas')
@@ -192,50 +309,91 @@
 
                                     data.forEach(puntoVenta => {
                                         const fila = `<tr>
-                            <td>${puntoVenta.pais}</td>
-                            <td>${puntoVenta.estado}</td>
-                            <td>${puntoVenta.municipio}</td>
-                            <td>${puntoVenta.cp}</td>
-                            <td>${puntoVenta.nombre}</td>
-                            <td>${puntoVenta.zona}</td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-primary m-1" data-bs-toggle="modal"
-                                data-bs-target="#editarPuntoVentaModal"
-                                onclick="cargarDetallePuntoVenta('${puntoVenta.nombre}')">Editar</button>
-                                <button type="button" class="btn btn-sm btn-danger" onclick="eliminarPuntoVenta('${puntoVenta.nombre}')">Eliminar</button>
-                            </td>
-                        </tr>`;
+                    <td>${puntoVenta.pais}</td>
+                    <td>${puntoVenta.estado}</td>
+                    <td>${puntoVenta.municipio}</td>
+                    <td>${puntoVenta.cp}</td>
+                    <td>${puntoVenta.nombre}</td>
+                    <td>${puntoVenta.zona}</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-primary m-1" data-bs-toggle="modal"
+                            data-bs-target="#editarPuntoVentaModal"
+                            onclick="cargarDetallePuntoVenta('${puntoVenta.nombre}')">Editar</button>
+                        <button type="button" class="btn btn-sm btn-danger" onclick="eliminarPuntoVenta('${puntoVenta.nombre}')">Eliminar</button>
+                    </td>
+                </tr>`;
                                         tablaPuntosVentas.innerHTML += fila;
+                                    });
+                                })
+                                .then(() => {
+                                    // Después de cargar, mostrar SweetAlert de éxito
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Lista de puntos de venta cargada exitosamente',
+                                        showConfirmButton: false,
+                                        timer: 800
                                     });
                                 })
                                 .catch(error => {
                                     console.error('Error:', error);
-                                    alert('Error al cargar la lista de puntos de venta');
+                                    // En caso de error, mostrar SweetAlert de error
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error',
+                                        text: 'Error al cargar la lista de puntos de venta'
+                                    });
                                 });
                         }
 
+
                         function eliminarPuntoVenta(nombre) {
-                            if (confirm('¿Estás seguro de eliminar este punto de venta?')) {
-                                fetch(`https://8eleven.glitch.me/puntosVentasRoutes/eliminar-punto-venta/${nombre}`, {
-                                    method: 'DELETE'
-                                })
-                                    .then(response => {
-                                        if (!response.ok) {
-                                            throw new Error(`HTTP error! Status: ${response.status}`);
-                                        }
-                                        return response.json();
+                            Swal.fire({
+                                title: '¿Estás seguro de eliminar este punto de venta?',
+                                text: 'Esta acción no se puede deshacer',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                cancelButtonText: 'Cancelar',
+                                confirmButtonColor: '#d33',
+                                cancelButtonColor: '#3085d6',
+                                confirmButtonText: 'Sí, eliminar'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Si el usuario confirma la eliminación
+                                    fetch(`https://8eleven.glitch.me/puntosVentasRoutes/eliminar-punto-venta/${nombre}`, {
+                                        method: 'DELETE'
                                     })
-                                    .then(data => {
-                                        console.log(data);
-                                        alert('Punto de venta eliminado exitosamente');
-                                        cargarPuntosVentas(); // Recargar la lista después de eliminar
-                                    })
-                                    .catch(error => {
-                                        console.error('Error:', error);
-                                        alert('Error al eliminar el punto de venta');
-                                    });
-                            }
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error(`HTTP error! Status: ${response.status}`);
+                                            }
+                                            return response.json();
+                                        })
+                                        .then(data => {
+                                            console.log(data);
+                                            // Utiliza SweetAlert para mostrar un mensaje de éxito
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: 'Punto de venta eliminado exitosamente',
+                                                showConfirmButton: false,
+                                                timer: 1500
+                                            }).then(() => {
+                                                // Recargar la lista después de eliminar
+                                                cargarPuntosVentas();
+                                            });
+                                        })
+                                        .catch(error => {
+                                            console.error('Error:', error);
+                                            // Utiliza SweetAlert para mostrar un mensaje de error
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Error',
+                                                text: 'Error al eliminar el punto de venta'
+                                            });
+                                        });
+                                }
+                            });
                         }
+
 
                         cargarPuntosVentas();
                     </script>
@@ -244,7 +402,6 @@
                     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
                     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
                     <script src="js/sb-admin-2.min.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
