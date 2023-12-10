@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Gestión de Rutas - 8Eleven</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+
+        <!-- Barra Lateral (Sidebar) -->
+        <div id="sidebar"></div>
+
+        <!-- Contenido de la página -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+
+                <!-- Barra de Navegación Superior -->
+                <div id="topbar"></div>
+
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2">Gestión de Rutas</h1>
+
+                    <!-- Tabla de Rutas -->
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Punto de Salida</th>
+                                <th>Punto de Llegada</th>
+                                <th>Transportista</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cuerpoTabla"></tbody>
+                    </table>
+
+
+    <!-- Scripts -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        fetch('sidebar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('sidebar').innerHTML = data;
+            });
+
+        fetch('topbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('topbar').innerHTML = data;
+            });
+
+            function cargarRutas() {
+    fetch('https://8eleven.glitch.me/rutas/listar-rutas')
+        .then(response => response.json())
+        .then(data => {
+            const cuerpoTabla = document.getElementById('cuerpoTabla');
+            cuerpoTabla.innerHTML = '';
+
+            // Mapear las promesas de obtenerDirecciones
+            const direccionesPromises = data.map(ruta =>
+                Promise.all([
+                    obtenerDireccion(ruta.puntoSalida.lat, ruta.puntoSalida.lng),
+                    obtenerDireccion(ruta.puntoLlegada.lat, ruta.puntoLlegada.lng)
+                ])
+            );
+
+            // Esperar a que todas las promesas se resuelvan
+            Promise.all(direccionesPromises)
+                .then(direcciones => {
+                    // Iterar sobre los resultados y construir la tabla
+                    data.forEach((ruta, index) => {
+                        const fila = `<tr>
+                            <td>${direcciones[index][0]}</td>
+                            <td>${direcciones[index][1]}</td>
+                            <td>${ruta.transportista}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="eliminarRuta('${ruta.transportista}')">Eliminar</button>
+                            </td>
+                        </tr>`;
+                        cuerpoTabla.innerHTML += fila;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al obtener direcciones:', error);
+                });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al cargar la lista de rutas');
+        });
+}
+
+                        function obtenerDireccion(lat, lng) {
+    const apiKey = 'AIzaSyB6gljlctTchDnY8RzqxRCC2hp07dSVUbw';  // Reemplaza con tu clave de API de Google Maps
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
+
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.results && data.results.length > 0) {
+                return data.results[0].formatted_address;
+            } else {
+                throw new Error('Dirección no encontrada');
+            }
+        })
+        .catch(error => {
+            console.error('Error al obtener la dirección:', error);
+            return 'Dirección no disponible';
+        });
+}
+
+function eliminarRuta(nombre) {
+    fetch(`https://8eleven.glitch.me/rutas/eliminar-ruta/${nombre}`, {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            alert('Ruta eliminada exitosamente');
+            cargarRutas(); // Vuelve a cargar la lista de rutas después de la eliminación
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al eliminar la ruta');
+        });
+}
+
+function obtenerCoordenadas(coordenadasString) {
+    // Esta función puede necesitar ajustes según el formato de tus coordenadas
+    const coordenadasArray = coordenadasString.split(',').map(coord => parseFloat(coord.trim()));
+    return {
+        lat: coordenadasArray[0],
+        lng: coordenadasArray[1]
+    };
+}
+
+
+        function cargarDatosRutaEnModal(id) {
+        fetch(`https://8eleven.glitch.me/rutas/detalle-ruta/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('editPuntoSalida').value = `${data.puntoSalida.lat}, ${data.puntoSalida.lng}`;
+            document.getElementById('editPuntoLlegada').value = `${data.puntoLlegada.lat}, ${data.puntoLlegada.lng}`;
+            document.getElementById('editTransportista').value = data.transportista;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al cargar los detalles de la ruta');
+        });
+}
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            cargarRutas();
+        });
+    </script>
+</body>
+
+</html>
