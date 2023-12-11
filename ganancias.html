@@ -106,8 +106,6 @@
                 Finanzas
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="ganancias.html">
@@ -197,18 +195,19 @@
                 <!-- End of Topbar -->
                 <div class="container w-auto">
                     <!-- Page Heading -->
-                    <h1 class="h2 mb-2">Inventario</h1>
+                    <h1 class="h2 mb-2">Ganancias</h1>
 
-                    <!-- Tabla para mostrar los productos -->
+                    <!-- Tabla para mostrar los datos de ventas y ganancias -->
                     <div class="card">
                         <div class="card-body p-2">
                             <div class="table-responsive container-fluid position-relative">
-                                <table class="table table-striped mb-5" id="productos-table">
+                                <table class="table table-striped mb-5" id="ganancias-table">
                                     <thead>
                                         <tr>
-                                            <th>Producto</th>
-                                            <th>Cantidad</th>
-                                            <th>Precio</th>
+                                            <th>ID de Venta</th>
+                                            <th>Vendedor</th>
+                                            <th>Productos</th>
+                                            <th>Ganancia Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -231,27 +230,31 @@
                 document.getElementById('topbar').innerHTML = data;
             });
         $(document).ready(function () {
-            // Fetch product data using AJAX
-            $.get('https://8eleven.glitch.me/products/listar-productos', function (data) {
-                // Assuming data is an array of products
-                populateProductTable(data);
+            // Fetch sales data using AJAX
+            $.get('https://8eleven.glitch.me/ventas/listar-ventas', function (data) {
+                // Assuming data is an array of sales
+                populateSalesTable(data);
             });
 
-            // Function to populate the product table
-            function populateProductTable(products) {
-                var tableBody = $('#productos-table tbody');
+            // Function to populate the sales table
+            function populateSalesTable(sales) {
+                var tableBody = $('#ganancias-table tbody');
                 tableBody.empty(); // Clear existing rows
 
-                // Iterate through products and append rows to the table
-                products.forEach(function (product) {
+                // Iterate through sales and append rows to the table
+                sales.forEach(function (sale) {
+                    // Calculate total profit based on product prices and quantities
+                    var totalProfit = 0;
+                    sale.productos.forEach(function (product) {
+                        totalProfit += product.cantidad * product.precio;
+                    });
+
                     tableBody.append(`
                         <tr>
-                            <td>${product.nombre}</td>
-                            <td>${product.stock}</td>
-                            <td>$${product.precio_venta}</td>
-                            <td>
-                                <!-- You can add additional columns or data here -->
-                            </td>
+                            <td>${sale.id_venta}</td>
+                            <td>${sale.vendedor}</td>
+                            <td>${JSON.stringify(sale.productos)}</td>
+                            <td>$${totalProfit.toFixed(2)}</td>
                         </tr>
                     `);
                 });
